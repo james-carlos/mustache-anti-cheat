@@ -1,0 +1,99 @@
+# GuardAC configuration
+# After editing, run /guardac reload
+
+alerts:
+  console: true
+  cooldown-ms: 750        # min delay between alerts for the same player + check
+
+decay:
+  interval-seconds: 30    # every N seconds every violation level drops by 'amount'
+  amount: 1.0
+
+lag:
+  spike-ms: 150           # a server tick longer than this counts as a lag spike
+  exempt-ms: 3000         # checks are paused this long after a spike / low TPS
+  min-tps: 18.0
+
+exempt:
+  join-ms: 5000           # grace period after joining
+
+cancel-hits: true         # cancel hits that fail reach / killaura checks
+
+checks:
+  fly:
+    enabled: true
+    vl: 1.0
+    buffer: 3.0
+    prediction-tolerance: 0.06
+    hover-air-ticks: 12
+  speed:
+    enabled: true
+    vl: 1.0
+    buffer: 4.0
+    max-horizontal: 0.55  # blocks/tick while airborne (sprint-jump peak is ~0.49)
+    max-ground: 0.33      # blocks/tick after several ticks on the ground (sprint is ~0.29)
+    ground-ticks: 4
+  timer:
+    enabled: true
+    vl: 1.0
+    threshold-ms: 300
+    clamp-ms: 1000        # how much "lag credit" a player can bank
+  nofall:
+    enabled: true
+    vl: 1.0
+    buffer: 2.0
+    tolerance: 4.5
+  reach:
+    enabled: true
+    vl: 1.0
+    buffer: 3.0
+    max: 3.1
+    ping-factor: 0.004    # extra leeway per ms of ping
+    max-ping-leeway: 1.0
+  killaura:
+    enabled: true
+    vl: 1.0
+    buffer: 3.0
+    max-angle: 65.0       # degrees between crosshair and target centre
+    min-distance: 1.5
+    multi-window-ms: 400
+    multi-count: 3        # distinct targets hit inside the window
+  autoclicker:
+    enabled: true
+    vl: 1.0
+    max-cps: 22
+    samples: 40
+    max-mean-ms: 150
+    min-std-ms: 6.0
+
+# Run commands when a check's violation level reaches the threshold.
+# Placeholders: %player% %check% %vl%
+punishments:
+  fly:
+    threshold: 20
+    commands:
+      - "kick %player% GuardAC: unfair advantage (%check%)"
+  speed:
+    threshold: 25
+    commands:
+      - "kick %player% GuardAC: unfair advantage (%check%)"
+  timer:
+    threshold: 25
+    commands:
+      - "kick %player% GuardAC: unfair advantage (%check%)"
+  nofall:
+    threshold: 10
+    commands:
+      - "kick %player% GuardAC: unfair advantage (%check%)"
+  reach:
+    threshold: 20
+    commands:
+      - "kick %player% GuardAC: unfair advantage (%check%)"
+  killaura:
+    threshold: 20
+    commands:
+      - "kick %player% GuardAC: unfair advantage (%check%)"
+  autoclicker:
+    threshold: 15
+    commands:
+      - "kick %player% GuardAC: unfair advantage (%check%)"

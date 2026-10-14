@@ -1,0 +1,23 @@
+name: GuardAC
+version: 1.0.0
+main: me.guardac.GuardAC
+api-version: '26.2'
+description: Lightweight anti-cheat (fly, speed, timer, nofall, reach, killaura, autoclicker)
+
+commands:
+  guardac:
+    description: GuardAC admin command
+    usage: /guardac <reload|alerts|vl|clear>
+    aliases: [gac]
+    permission: guardac.admin
+
+permissions:
+  guardac.admin:
+    description: Use /guardac
+    default: op
+  guardac.alerts:
+    description: Receive cheat alerts in chat
+    default: op
+  guardac.bypass:
+    description: Not checked by GuardAC
+    default: false
